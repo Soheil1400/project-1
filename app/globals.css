@@ -2,20 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@layer {
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @font-face {
+    font-family: "Vazirmatn-Regular";
+    src: url("../public/font/Vazirmatn-Regular.ttf");
+  }
+
+  @font-face {
+    font-family: "Vazirmatn-Medium";
+    src: url("../public/font/Vazirmatn-Medium.ttf");
+  }
+
+  @font-face {
+    font-family: "Vazirmatn-SemiBold";
+    src: url("../public/font/Vazirmatn-SemiBold.ttf");
+  }
+
+  @font-face {
+    font-family: "Vazirmatn-Bold";
+    src: url("../public/font/Vazirmatn-Bold.ttf");
+  }
+
+  @font-face {
+    font-family: "Vazirmatn-ExtraBold";
+    src: url("../public/font/Vazirmatn-ExtraBold.ttf");
   }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Vazirmatn-Regular, Helvetica, sans-serif;
 }

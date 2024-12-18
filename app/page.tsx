@@ -1,13 +1,20 @@
 'use client'
 import {Swiper, SwiperSlide, useSwiper} from 'swiper/react';
-import {MdArrowBackIosNew} from "react-icons/md";
+import {MdArrowBackIosNew, MdOutlineShoppingBag, MdOutlineStar, MdPerson} from "react-icons/md";
 
 import 'swiper/css';
 import {DATABASE} from "@/src/data/data";
 import Image from "next/image";
+import SnnapShop from '../public/images/shop.png'
 
-const DATA = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-const DATA_2 = [1, 2, 3, 4, 5, 6, 7, 8]
+const PrimarySButton = ({ children }) => {
+    return (
+        <button className="bg-primary-main text-white  px-3 py-2 flex items-center justify-center rounded-lg text-xl">
+            {children}
+        </button>
+    );
+};
+
 
 const SwiperNextButton = () => {
     const swiper = useSwiper();
@@ -49,10 +56,10 @@ const Slider = () => {
     return (
         <div className={'flex w-full flex-wrap max-w-7xl my-16'}>
             <div className={'flex justify-between w-full my-4'}>
-                <div>
+                <div className={'text-xl font-bold'}>
                     {'تازه‌ها در اسنپ‌فود'}
                 </div>
-                <div>
+                <div className={'text-secondary-main text-lg font-bold'}>
                     {'مشاهده همه'}
                 </div>
             </div>
@@ -65,30 +72,37 @@ const Slider = () => {
                     onSwiper={(swiper) => console.log(swiper)}
                 >
                     <SwiperNextButton/>
-                    {DATA_2.map(item => (
-                        <SwiperSlide key={item}>
+                    {DATABASE.restaurants.map(item => (
+                        <SwiperSlide key={item.id}>
                             <div className={'w-full flex flex-wrap'}>
-                                <div className={'bg-red-500 w-full flex flex-wrap rounded-xl pb-3 cursor-pointer'}>
+                                <div className={'w-full flex flex-wrap rounded-xl pb-3 cursor-pointer shadow-shadows-small hover:shadow-shadows-high'}>
                                     <div className={'w-full bg-amber-600 h-36 rounded-t-xl relative'}>
-                                        <div className={'absolute top-8 bg-white rounded-tl-xl rounded-bl-xl px-4'}>
-                                            label
+                                        <Image src={item.image} alt={item.name} width={100} height={100}
+                                               style={{width: '100%', height: '100%', borderRadius: '8px 8px 0 0'}}/>
+                                        <div className={'absolute top-8 bg-white rounded-tl-xl rounded-bl-xl px-4 text-sm py-1 text-secondary-main'}>
+                                            {item.pay}
                                         </div>
                                     </div>
                                     <div className={'flex flex-col w-full justify-center items-center -mt-8 z-40'}>
-                                        <div className={'w-20 h-20 bg-blue-600 rounded-xl border-4 border-white'}>
-
+                                        <div className={'w-20 h-20 rounded-xl border-4 border-white'}>
+                                            <Image src={item.logo} alt={item.name} width={100} height={100}
+                                                   style={{width: '100%', height: '100%', borderRadius: '8px'}}/>
                                         </div>
-                                        <div className={'mt-4'}>
-                                            title
+                                        <div className={'mt-4 text-lg font-bold'}>
+                                            {item.name}
                                         </div>
-                                        <div className={'my-1'}>
-                                            tag
+                                        <div className={'flex my-1'}>
+                                            <MdOutlineStar style={{color: '#FACB0F', marginLeft: '2px'}}/>
+                                            {` ${item.star} `}
+                                            {` (${item.rate}) `}
                                         </div>
-                                        <div className={'my-1'}>
-                                            description
+                                        <div className={'my-1 text-sm text-gray5-color'}>
+                                            {item.otherCats.map( item => item)}
                                         </div>
-                                        <div className={'my-1'}>
-                                            delivery
+                                        <div className={'flex my-1 text-xs mt-3'}>
+                                            <Image src={item.delivery.icon} alt={'delivery'} width={16} height={16} style={{marginLeft: 4}}/>
+                                            {` ${item.delivery.type} `}
+                                            {` ${item.delivery.price} تومان`}
                                         </div>
                                     </div>
                                 </div>
@@ -104,22 +118,23 @@ const Slider = () => {
 const ContactUs = () => {
     return (
         <div className={'flex w-full flex-wrap max-w-7xl my-16'}>
-            <div className={'flex w-full bg-amber-800 rounded-xl p-8 justify-between'}>
+            <div className={'flex w-full bg-body-color rounded-xl p-8 justify-between'}>
                 <div className={'w-1/2 flex-colm md:w-full'}>
-                    <div>
+                    <h2 className={'text-3xl font-semibold text-carbon-main'}>
                         {'صاحب کسب و کار هستید؟'}
-                    </div>
-                    <div>
+                    </h2>
+                    <h3 className={'text-2xl my-8 text-carbon-main'}>
                         {'با اسنپ فود کسب و کارتان را آنلاین کنید و فروشتان را افزایش دهید.'}
-                    </div>
+                    </h3>
                     <div>
-                        <button className={'bg-blue-900'}>
+                        <PrimarySButton>
+                            <MdOutlineShoppingBag style={{marginLeft: 4}}/>
                             {'ثبت نام فروشندگان'}
-                        </button>
+                        </PrimarySButton>
                     </div>
                 </div>
                 <div className={'w-1/2 hidden justify-end md:flex'}>
-                    image
+                    <Image src={SnnapShop} alt={'image'} width={350} height={350} style={{marginTop: '-124px'}}/>
                 </div>
             </div>
         </div>
@@ -129,19 +144,19 @@ const ContactUs = () => {
 const Header = () => {
     return (
         <div className={'w-full flex flex-wrap bg-white p-4 fixed shadow-shadows-small z-50'}>
-            <div className={'w-full flex justify-between'}>
+            <div className={'w-full flex justify-between mb-8'}>
                 <div>
-                    {'logo'}
-                </div>
-                <div>
-                    {'search'}
+                    <Image src={"/images/images-home/logo.svg"} width={68} height={34} alt="logo" />
                 </div>
                 <div className={'flex'}>
-                    <div>
-                        {'profile'}
+                    <div className={'ml-16'}>
+                        <MdPerson style={{fontSize: '24px'}}/>
                     </div>
-                    <div>
-                        {'history'}
+                    <div className={'flex'}>
+                        <MdOutlineShoppingBag  style={{fontSize: '24px'}}/>
+                        <p>
+                            {'سفارش ها'}
+                        </p>
                     </div>
                 </div>
             </div>
